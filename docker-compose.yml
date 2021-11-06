@@ -19,6 +19,10 @@ services:
     image: memcached
     restart: always
 
+  rabbitmq:
+    image: rabbitmq
+    restart: always
+
   hbase:
     image: dajobe/hbase
     restart: always
@@ -35,4 +39,5 @@ services:
       - db
       - redis
       - memcached
+      - rabbitmq
       - hbase

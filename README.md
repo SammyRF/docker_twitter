@@ -18,6 +18,5 @@ based on
 * memcached
 * rabbit MQ
 * HBase
-* Cassandra
 
 All services are running in docker
