@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: twitter
+      MYSQL_USER: django
+      MYSQL_PASSWORD: yourpassword
+      MYSQL_ROOT_PASSWORD: yourpassword
+
+  redis:
+    image: redis
+    restart: always
+
+  memcached:
+    image: memcached
+    restart: always
+
+  hbase:
+    image: dajobe/hbase
+    restart: always
+
+  django:
+    image: twitter
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/workspaces/docker_twitter
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+      - redis
+      - memcached
+      - hbase
