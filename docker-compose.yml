@@ -10,6 +10,8 @@ services:
       MYSQL_USER: django
       MYSQL_PASSWORD: yourpassword
       MYSQL_ROOT_PASSWORD: yourpassword
+    volumes:
+      - mysql-data:/var/lib/mysql
 
   redis:
     image: redis
@@ -41,3 +43,6 @@ services:
       - memcached
       - rabbitmq
       - hbase
+
+volumes:
+  mysql-data:
