@@ -30,7 +30,7 @@ services:
     restart: always
 
   django:
-    image: twitter
+    image: twitter_alpha
     stdin_open: true
     tty: true
     volumes:
