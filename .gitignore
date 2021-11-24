@@ -1,5 +1,6 @@
 twitter/local_settings.py
 media/
+docker-twitter.pem
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
