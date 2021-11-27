@@ -24,16 +24,28 @@ class FriendshipViewSet(viewsets.GenericViewSet):
         if not GateKeeper.is_switch_on('switch_friendship_to_hbase'):
             # pagination in mysql
             if from_user_id:
-                friendships = Friendship.objects.filter(from_user_id=from_user_id).order_by('-created_at')
+                friendships = Friendship.objects.filter(
+                    from_user_id=from_user_id
+                ).order_by('-created_at')
             else:
-                friendships = Friendship.objects.filter(to_user_id=to_user_id).order_by('-created_at')
+                friendships = Friendship.objects.filter(
+                    to_user_id=to_user_id
+                ).order_by('-created_at')
             page = self.paginate_queryset(friendships)
         else:
             # pagination in hbase
             if from_user_id:
-                page = self.paginator.paginate_hbase(HBaseFromUser, (from_user_id, ), request)
+                page = self.paginator.paginate_hbase(
+                    HBaseFromUser, 
+                    (from_user_id, ), 
+                    request,
+                )
             else:
-                page = self.paginator.paginate_hbase(HBaseToUser, (to_user_id,), request)
+                page = self.paginator.paginate_hbase(
+                    HBaseToUser, 
+                    (to_user_id,), 
+                    request,
+                )
         serializer = FriendshipSerializer(page, context={'user': request.user}, many=True)
         return self.paginator.get_paginated_response(serializer.data)
 
@@ -44,7 +56,10 @@ class FriendshipViewSet(viewsets.GenericViewSet):
         to_user_id = request.data.get('user_id')
 
         # if friendship exists, skip
-        if FriendshipService.has_followed(from_user_id=request.user.id, to_user_id=to_user_id):
+        if FriendshipService.has_followed(
+            from_user_id=request.user.id, 
+            to_user_id=to_user_id,
+        ):
             return Response({
                 'success': True,
                 'message': 'friendship exists',
@@ -60,8 +75,10 @@ class FriendshipViewSet(viewsets.GenericViewSet):
 
         friendship = serializer.save()
         return Response({
-            'friendships': FriendshipSerializer(friendship, context={'user': request.user}).data,
-        }, status=status.HTTP_201_CREATED)
+            'friendships': FriendshipSerializer(
+                friendship, 
+                context={'user': request.user}).data,
+            }, status=status.HTTP_201_CREATED)
 
     @action(methods=['POST'], detail=False, permission_classes=[IsAuthenticated])
     @required_all_params(method='POST', params=('user_id',))
@@ -85,7 +102,3 @@ class FriendshipViewSet(viewsets.GenericViewSet):
             'success': True,
             'message': 'friendship deleted'
         }, status=status.HTTP_200_OK)
-
-
-
-

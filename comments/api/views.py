@@ -25,7 +25,7 @@ class CommentViewSet(viewsets.GenericViewSet):
         return [AllowAny()]
 
     @rate_limit(hms=(0, 6, 0))
-    def create(self, request, *arg, **kwargs):
+    def create(self, request):
         data = {
             'user_id': request.user.id,
             'tweet_id': request.data.get('tweet_id'),
@@ -43,7 +43,7 @@ class CommentViewSet(viewsets.GenericViewSet):
         )
 
     @rate_limit(hms=(0, 6, 0))
-    def update(self, request, *arg, **kwargs):
+    def update(self, request, pk):
         serializer = CommentSerializerForUpdate(
             instance=self.get_object(),
             data={'content': request.data['content']},
@@ -58,7 +58,7 @@ class CommentViewSet(viewsets.GenericViewSet):
         )
 
     @rate_limit(hms=(0, 6, 0))
-    def destroy(self, request, *arg, **kwargs):
+    def destroy(self, request, pk):
         comment = self.get_object()
         comment.delete()
         return Response({
@@ -68,7 +68,7 @@ class CommentViewSet(viewsets.GenericViewSet):
 
     @required_all_params(method='GET', params=('tweet_id',))
     @rate_limit(hms=(0, 6, 0))
-    def list(self, request, *arg, **kwargs):
+    def list(self, request):
         queryset = self.get_queryset()
         comments = self.filter_queryset(queryset).order_by('created_at')
         serializer = CommentSerializer(comments, context={'user': request.user}, many=True)

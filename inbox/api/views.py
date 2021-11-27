@@ -19,7 +19,10 @@ class NotificationViewSet(viewsets.GenericViewSet, viewsets.mixins.ListModelMixi
     @action(methods=['GET'], detail=False, url_path='unread-count')
     @rate_limit(hms=(0, 6, 0))
     def unread_count(self, request):
-        count = Notification.objects.filter(recipient=request.user, unread=True).count()
+        count = Notification.objects.filter(
+            recipient=request.user,
+             unread=True,
+        ).count()
         return Response({
             'success': True,
             'count': count,
@@ -28,7 +31,10 @@ class NotificationViewSet(viewsets.GenericViewSet, viewsets.mixins.ListModelMixi
     @action(methods=['POST'], detail=False, url_path='mark-all-as-read')
     @rate_limit(hms=(0, 6, 0))
     def mark_all_as_read(self, request):
-        count = Notification.objects.filter(recipient=request.user, unread=True).update(unread=False)
+        count = Notification.objects.filter(
+            recipient=request.user, 
+            unread=True,
+        ).update(unread=False)
         return Response({
             'success': True,
             'count': count,
@@ -45,4 +51,7 @@ class NotificationViewSet(viewsets.GenericViewSet, viewsets.mixins.ListModelMixi
             return helpers.validation_errors_response(serializer.errors)
 
         notification = serializer.save()
-        return Response(NotificationSerializer(notification).data, status=status.HTTP_200_OK)
+        return Response(
+            NotificationSerializer(notification).data,
+            status=status.HTTP_200_OK,
+        )

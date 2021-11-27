@@ -3,6 +3,7 @@ from likes.models import Like
 
 
 class LikeServices:
+    
     @classmethod
     def has_liked(cls, user, target):
         if user.is_anonymous:

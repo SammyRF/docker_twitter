@@ -7,7 +7,6 @@ import pytz
 def utc_now():
     return datetime.now().replace(tzinfo=pytz.utc)
 
-
 def validation_errors_response(errors):
     return Response({
         'success': False,

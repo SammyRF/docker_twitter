@@ -39,17 +39,23 @@ def incr_comments_count_in_redis(sender, instance, created, **kwargs):
     from tweets.models import Tweet
     from django.db.models import F
 
+    # update action will not make change in redis
     if not created:
         return
 
-    Tweet.objects.filter(id=instance.tweet_id).update(comments_count=F('comments_count') + 1)
+    # use row lock
+    Tweet.objects.filter(id=instance.tweet_id).update(
+        comments_count=F('comments_count') + 1
+    )
     RedisHelper.incr_count_in_redis(instance.tweet, 'comments_count')
 
 def decr_comments_count_in_redis(sender, instance, **kwargs):
     from tweets.models import Tweet
     from django.db.models import F
 
-    Tweet.objects.filter(id=instance.tweet_id).update(comments_count=F('comments_count') - 1)
+    Tweet.objects.filter(id=instance.tweet_id).update(
+        comments_count=F('comments_count') - 1
+    )
     RedisHelper.decr_count_in_redis(instance.tweet, 'comments_count')
 
 # redis

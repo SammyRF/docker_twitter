@@ -43,13 +43,20 @@ class TweetViewSet(viewsets.GenericViewSet):
 
         tweet = serializer.save()
         NewsFeedService.fan_out(tweet=tweet)
-        return Response(TweetSerializer(tweet, context={'user': request.user}).data, status=status.HTTP_201_CREATED)
+        return Response(
+            TweetSerializer(tweet, context={'user': request.user}).data,
+            status=status.HTTP_201_CREATED,
+        )
 
     @rate_limit(hms=(0, 6, 0))
     def retrieve(self, request, pk):
         tweet = Tweet.objects.filter(id=pk).first()
         if tweet:
-            return Response(TweetSerializerForDetails(tweet, context={'user': request.user}).data, status=status.HTTP_200_OK)
+            return Response(TweetSerializerForDetails(
+                tweet, 
+                context={'user': request.user}).data, 
+                status=status.HTTP_200_OK,
+            )
         else:
             return Response({
                 'success': False,

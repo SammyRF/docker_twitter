@@ -1,6 +1,6 @@
-from utils.redis.redis_client import RedisClient
 from datetime import datetime
 from django.conf import settings
+from utils.redis.redis_client import RedisClient
 
 TIME_STAMP_PATTERN = '{rl_prefix}:{api_path}:{api_name}:{user_id}:'
 

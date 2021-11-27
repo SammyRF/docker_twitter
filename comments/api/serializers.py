@@ -15,7 +15,15 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'user', 'tweet_id', 'content', 'created_at', 'has_like', 'likes_count')
+        fields = (
+            'id', 
+            'user', 
+            'tweet_id', 
+            'content', 
+            'created_at', 
+            'has_like', 
+            'likes_count'
+        )
 
     def get_has_like(self, obj):
         return LikeServices.has_liked(self.context['user'], obj)

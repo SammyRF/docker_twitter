@@ -45,7 +45,11 @@ class NewsFeedService:
             return RedisHelper.get_objects_in_redis_from_sql(key, queryset)
         else:
             # get objects in HBase
-            query_func = lambda limit: HBaseNewsFeed.filter(prefix=(user_id, None), limit=limit, reverse=True)
+            query_func = lambda limit: HBaseNewsFeed.filter(
+                prefix=(user_id, None), 
+                limit=limit, 
+                reverse=True
+            )
             return RedisHelper.get_objects_in_redis_from_hbase(key, query_func)
 
     @classmethod
@@ -57,5 +61,9 @@ class NewsFeedService:
             RedisHelper.extend_object_in_redis_from_sql(key, newsfeed, queryset)
         else:
             # get object in HBase
-            query_func = lambda limit: HBaseNewsFeed.filter(prefix=(newsfeed.user_id, None), limit=limit, reverse=True)
+            query_func = lambda limit: HBaseNewsFeed.filter(
+                prefix=(newsfeed.user_id, None), 
+                limit=limit, 
+                reverse=True,
+            )
             return RedisHelper.extend_object_in_redis_from_hbase(key, newsfeed, query_func)

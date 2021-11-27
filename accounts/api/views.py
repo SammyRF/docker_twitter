@@ -9,8 +9,8 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import (
     AllowAny,
-    IsAuthenticated,
     IsAdminUser,
+    
 )
 from rest_framework.response import Response
 from accounts.api.serializers import (
@@ -26,9 +26,6 @@ from utils.permissions import IsObjectOwner
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = User.objects.all()
     serializer_class = UserSerializerWithProfile
     permission_classes = (IsAdminUser,)
@@ -97,7 +94,7 @@ class AccountViewSet(viewsets.ViewSet):
             'user': UserSerializer(instance=user).data
         }, status=status.HTTP_201_CREATED)
 
-    @action(methods=['POST'], detail=False)
+    @action(methods=['POST'], permission_classes=[IsObjectOwner], detail=False)
     @rate_limit(hms=(0, 6, 0))
     def signoff(self, request):
         # check input

@@ -5,6 +5,7 @@ from notifications.signals import notify
 
 
 class NotificationSerivce:
+    
     @classmethod
     def send_like_notification(cls, like):
         target = like.content_object

@@ -37,11 +37,15 @@ def incr_likes_count_in_redis(sender, instance, created, **kwargs):
         return
 
     if isinstance(instance.content_object, Tweet):
-        Tweet.objects.filter(id=instance.object_id).update(likes_count=F('likes_count') + 1)
+        Tweet.objects.filter(id=instance.object_id).update(
+            likes_count=F('likes_count') + 1
+        )
         RedisHelper.incr_count_in_redis(instance.content_object, 'likes_count')
 
     if isinstance(instance.content_object, Comment):
-        Tweet.objects.filter(id=instance.object_id).update(likes_count=F('likes_count') + 1)
+        Tweet.objects.filter(id=instance.object_id).update(
+            likes_count=F('likes_count') + 1
+        )
         RedisHelper.incr_count_in_redis(instance.content_object, 'likes_count')
 
 def decr_likes_count_in_redis(sender, instance, **kwargs):
@@ -50,11 +54,15 @@ def decr_likes_count_in_redis(sender, instance, **kwargs):
     from django.db.models import F
 
     if isinstance(instance.content_object, Tweet):
-        Tweet.objects.filter(id=instance.object_id).update(likes_count=F('likes_count') - 1)
+        Tweet.objects.filter(id=instance.object_id).update(
+            likes_count=F('likes_count') - 1
+        )
         RedisHelper.decr_count_in_redis(instance.content_object, 'likes_count')
 
     if isinstance(instance.content_object, Comment):
-        Tweet.objects.filter(id=instance.object_id).update(likes_count=F('likes_count') - 1)
+        Tweet.objects.filter(id=instance.object_id).update(
+            likes_count=F('likes_count') - 1
+        )
         RedisHelper.decr_count_in_redis(instance.content_object, 'likes_count')
 
 

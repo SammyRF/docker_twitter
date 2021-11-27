@@ -65,4 +65,7 @@ class FriendshipForCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         from_user_id = validated_data['from_user_id']
         to_user_id = validated_data['to_user_id']
-        return FriendshipService.follow(from_user_id=from_user_id, to_user_id=to_user_id)
+        return FriendshipService.follow(
+            from_user_id=from_user_id, 
+            to_user_id=to_user_id,
+        )

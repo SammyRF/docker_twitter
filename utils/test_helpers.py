@@ -17,11 +17,8 @@ class TestHelpers:
         project_memcached.clear()
         RedisClient.clear()
         HBaseClient.clear()
-
-        # test hbase
-        if 1:
-            GateKeeper.turn_on('switch_friendship_to_hbase')
-            GateKeeper.turn_on('switch_newsfeed_to_hbase')
+        GateKeeper.turn_on('switch_friendship_to_hbase')
+        GateKeeper.turn_on('switch_newsfeed_to_hbase')
 
 
     @classmethod

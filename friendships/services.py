@@ -60,6 +60,7 @@ class FriendshipService:
 
         # invalid cached to_users in memcached when unfollow
         cls.invalidate_to_users_in_memcached(from_user_id)
+
         if not GateKeeper.is_switch_on('switch_friendship_to_hbase'):
             # remove in mysql
             deleted, _ = Friendship.objects.filter(
@@ -82,8 +83,8 @@ class FriendshipService:
                         created_at=ts,
                     )
                     return True
-            else:
-                return False
+                    
+            return False
 
     @classmethod
     def get_to_users_in_memcached(cls, from_user_id):

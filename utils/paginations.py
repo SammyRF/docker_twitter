@@ -44,7 +44,7 @@ class EndlessPagination(BasePagination):
         # if has_next_page, this means this page is fulfill this request
         if self.has_next_page:
             return paginated_list
-        # if cache list not fully loaded, means all objects are loaded from DB anyway.
+        # if cache list not full, means all objects are loaded from DB anyway.
         if len(cached_list) < settings.REDIS_LIST_LENGTH_LIMIT:
             return paginated_list
         # otherwise, cached list is not fulfill the page, need to reload from DB

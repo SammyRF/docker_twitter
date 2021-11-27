@@ -1,6 +1,10 @@
 from accounts.models import UserProfile
 from django.contrib.auth.models import User
-from utils.memcached.memcached_helper import USER_PROFILE_PATTERN, project_memcached, MemcachedHelper
+from utils.memcached.memcached_helper import (
+    USER_PROFILE_PATTERN, 
+    project_memcached, 
+    MemcachedHelper,
+)
 
 
 class UserService:
