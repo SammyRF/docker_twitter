@@ -9,8 +9,9 @@
     "antd-mobile": "^5.32.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^2.1.4",
+    "@babel/preset-react": "^7.22.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,5 +36,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.22.5",
+    "eslint-config-airbnb": "^19.0.4"
   }
 }
