@@ -1,13 +1,15 @@
 import { Button, Form, Input } from 'antd-mobile';
 import './index.css';
 import { useState } from 'react';
+import { loginService } from '../../services/login';
 
 const Login = () => {
   const [form] = Form.useForm();
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const vals = form.getFieldsValue();
-    // eslint-disable-next-line no-alert, no-undef
-    alert(`${vals.username} : ${vals.password}`);
+    const res = await loginService(vals.username, vals.password);
+    // eslint-disable-next-line no-alert
+    alert(res && res.length > 0 ? 'login succeeded' : 'login failed');
   };
 
   const [canLogin, setCanLogin] = useState(false);
