@@ -1,0 +1,22 @@
+.inputBox {
+  height: 50px;
+  width: 80%;
+  margin: 20px 10%;
+  padding-left: 20px;
+  border: solid 1px;
+  border-radius: 6px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.calendarBox {
+  width: 80%;
+  margin: 0px 10%;
+}
+
+.registerButton {
+  width: 80%;
+  border-radius: 50px;
+  height: 50px;
+  margin: 30px auto;
+}

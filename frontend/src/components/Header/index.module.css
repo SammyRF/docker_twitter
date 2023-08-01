@@ -1,0 +1,16 @@
+.headerDiv {
+  height: 50px;
+  text-align: center;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 18px;
+  font-size: 16px;
+  left: 18px;
+}
+
+.logo {
+  height: 30px;
+  margin-top: 10px;
+}
