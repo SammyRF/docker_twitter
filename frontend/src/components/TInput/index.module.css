@@ -1,0 +1,49 @@
+.tInput{
+  width: 80%;
+  margin: 20px 10%;
+  border: solid 1px gray;
+  border-radius: 5px;
+  height: 53px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.tInputFocused {
+  composes: tInput;
+  border: solid 1px skyblue;
+}
+
+.tLabel {
+  position: absolute;
+  top: 13px;
+  left: 10px;
+  color: #cecece;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 20px;
+  font-size: 20px;
+  z-index: -1;
+  transition: all 0.3s;
+}
+
+.tLableFocused {
+  composes: tLabel;
+  top: 5px;
+  color: skyblue;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.labelRight{
+  float: right;
+}
+
+.inputItem {
+  height: 53px;
+}
+
+.inputItemFocused {
+  margin-top: 15px;
+  height: 30px;
+}
