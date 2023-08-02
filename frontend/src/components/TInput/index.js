@@ -5,13 +5,14 @@ import { PropTypes } from 'prop-types';
 import style from './index.module.css';
 
 const TInput = ({
-  label, maxLen,
+  label, maxLen, onChange,
 }) => {
   const [isFocused, setFocused] = useState(false);
   const [value, setValue] = useState('');
   const onChangeHandler = (val) => {
     // eslint-disable-next-line no-unused-expressions
     val.length <= maxLen && setValue(val);
+    onChange(val);
   };
 
   return (
@@ -38,11 +39,13 @@ const TInput = ({
 TInput.propTypes = {
   label: PropTypes.string,
   maxLen: PropTypes.number,
+  onChange: PropTypes.func,
 };
 
 TInput.defaultProps = {
   label: '',
   maxLen: 10,
+  onChange: () => {},
 };
 
 export default TInput;
