@@ -10,6 +10,8 @@
     "antd-mobile": "^5.32.0",
     "antd-mobile-icons": "^0.3.0",
     "axios": "^1.4.0",
+    "moment": "^2.29.4",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
@@ -42,6 +44,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.22.5",
-    "eslint-config-airbnb": "^19.0.4"
+    "eslint-config-airbnb": "^19.0.4",
+    "prettier": "^3.0.0"
   }
 }
