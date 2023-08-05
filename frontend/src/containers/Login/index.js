@@ -1,43 +1,34 @@
-import { Button, Form, Input } from 'antd-mobile';
-import './index.css';
+import { Button, Toast } from 'antd-mobile';
 import { useState } from 'react';
+import style from './index.module.css';
 import { loginService } from '../../services/login';
+import TInput from '../../components/TInput';
+import Show from '../../components/Show';
+import { useGlobalContext } from '../../utils/context';
 
 const Login = () => {
-  const [form] = Form.useForm();
-  const onSubmit = async () => {
-    const vals = form.getFieldsValue();
-    const res = await loginService(vals.username, vals.password);
-    // eslint-disable-next-line no-alert
-    alert(res && res.length > 0 ? 'login succeeded' : 'login failed');
+  const [username, setUsername] = useState('');
+  const [canLogin, setCanLogin] = useState(false);
+
+  const onLogin = async () => {
+    const res = await loginService(username);
+    Toast.show(res && res.length > 0 ? 'login succeeded' : 'login failed');
   };
 
-  const [canLogin, setCanLogin] = useState(false);
-  const textChangeHandler = () => {
-    const vals = form.getFieldsValue();
-    const hasUsername = vals.username !== null && vals.username !== '' && typeof vals.username !== 'undefined';
-    const hasPassword = vals.password !== null && vals.password !== '' && typeof vals.password !== 'undefined';
-    setCanLogin(hasUsername && hasPassword);
+  const onTextChangeHandler = (v) => {
+    setUsername(v);
+    setCanLogin(v !== '');
   };
+
+  const [store] = useGlobalContext();
 
   return (
-    <div className="Login">
-      <Form
-        name="Login"
-        class-name="login-form"
-        form={form}
-        layout="horizontal"
-        mode="card"
-        footer={(<Button color="primary" block size="Large" onClick={onSubmit} disabled={!canLogin}>Login</Button>)}
-      >
-        <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
-          <Input placeholder="Username" clearable onChange={textChangeHandler} />
-        </Form.Item>
-        <Form.Item name="password" rules={[{ required: true, message: 'Please input your Password!' }]}>
-          <Input type="password" placeholder="Password" clearable onChange={textChangeHandler} />
-        </Form.Item>
-      </Form>
-    </div>
+    <Show visible={store === 'login'}>
+      <div className={style.tinputBox}>
+        <TInput label="username" onChange={onTextChangeHandler} value={username} />
+      </div>
+      <Button className={style.loginButton} color="primary" block size="Large" onClick={onLogin} disabled={!canLogin}>Login</Button>
+    </Show>
   );
 };
 

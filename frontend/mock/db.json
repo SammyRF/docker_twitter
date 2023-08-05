@@ -1,7 +1,16 @@
 {
   "user": [
     {
-      "username": "user1"
+      "id": "428",
+      "username": "428",
+      "phone": "521",
+      "birthday": "2000-01-01"
+    },
+    {
+      "id": "222",
+      "username": "222",
+      "phone": "222",
+      "birthday": "2000-01-01"
     }
   ]
 }

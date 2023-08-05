@@ -1,10 +1,14 @@
-import { Button, Calendar, Input } from 'antd-mobile';
+import {
+  Button, Calendar, Input, Toast,
+} from 'antd-mobile';
 
 import { useState } from 'react';
 import moment from 'moment';
 import style from './index.module.css';
-import Header from '../../components/Header';
 import TInput from '../../components/TInput';
+import { registerService } from '../../services/register';
+import Show from '../../components/Show';
+import { useGlobalContext } from '../../utils/context';
 
 const Register = () => {
   const [date, setDate] = useState(new Date('2000-01-01'));
@@ -22,9 +26,26 @@ const Register = () => {
     setCanRegister(username !== '' && v !== '');
   };
 
+  const onRegisterButtonClick = async () => {
+    try {
+      const res = await registerService({
+        id: username,
+        username,
+        phone,
+        birthday: moment(date).format('YYYY-MM-DD'),
+      });
+      if (res.id === username) {
+        Toast.show('register succeeded.');
+      }
+    } catch (_e) {
+      Toast.show('register failed.');
+    }
+  };
+
+  const [store] = useGlobalContext();
+
   return (
-    <div>
-      <Header />
+    <Show visible={store === 'register'}>
       <TInput label="Username" onChange={onUsernameChangedHandler} value={username} />
       <TInput label="Phone" onChange={onPhoneChangedHandler} value={phone} />
       <Input
@@ -46,11 +67,11 @@ const Register = () => {
         block
         size="Large"
         disabled={!canRigester}
-        onClick={() => alert(`${username} : ${phone} : ${moment(date).format('YYYY-MM-DD')}`)}
+        onClick={onRegisterButtonClick}
       >
         Register
       </Button>
-    </div>
+    </Show>
   );
 };
 
